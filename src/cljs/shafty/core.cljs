@@ -272,14 +272,14 @@
     (let [skipped (atom false)]
       (-filter! this (fn [x]
                       (if (false? @skipped)
-                        (swap! skipped (fn [] true)) false
+                        (do (swap! skipped (fn [] true)) false)
                         true)))))
 
   (filter-repeats! [this initial]
     (let [prev (atom initial)]
       (-filter! this (fn [x]
                       (if (not (= @prev x))
-                        (swap! prev (fn [] x)) true
+                        (do (swap! prev (fn [] x)) true)
                         false))))))
 
 (extend-type js/HTMLElement
